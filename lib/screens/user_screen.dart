@@ -3,14 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 
-class UserPage extends ConsumerStatefulWidget {
-  const UserPage({super.key});
+class UserScreen extends ConsumerStatefulWidget {
+  const UserScreen({super.key});
 
   @override
   UserPageState createState() => UserPageState();
 }
 
-class UserPageState extends ConsumerState<UserPage> {
+class UserPageState extends ConsumerState<UserScreen> {
 
   int selectedDataSetIndex = -1;
   double angleValue = 0;
@@ -165,4 +165,5 @@ class RawDataSet {
   final Color color;
   final List<double> values;
 }
+
 

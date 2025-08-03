@@ -1,10 +1,10 @@
 import 'package:go_router/go_router.dart';
 import 'package:productivity/main.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:productivity/pages/tasks.dart';
-import 'package:productivity/pages/user.dart';
-import '../widgets/navbar.dart';
-import '../pages/home.dart';
+import 'package:productivity/screens/home_screen.dart';
+import 'package:productivity/screens/tasks_screen.dart';
+import 'package:productivity/screens/user_screen.dart';
+import 'package:productivity/widgets/navbar.dart';
 
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -15,19 +15,20 @@ final routerProvider = Provider<GoRouter>((ref) {
         routes: [
           GoRoute(
             path: '/',
-            builder: (context, state) => HomePage()
+            builder: (context, state) => HomeScreen()
           ),
           GoRoute(
             path: '/tasks',
-            builder: (context, state) => TasksPage()
+            builder: (context, state) => TasksScreen()
           ),
           GoRoute(
             path: '/user',
-            builder: (context, state) => UserPage()
+            builder: (context, state) => UserScreen()
           )
         ]
       ),
     ]
   );
 });
+
 
