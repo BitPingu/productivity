@@ -5,20 +5,23 @@ import 'package:productivity/models/task.dart';
 class TaskNotifier extends ChangeNotifier {
   List<Task> tasks = [
     Task(
-      id: '0', 
+      id: '0',
+      exp: 10,
       title: 'Drink water', 
       subtitle: '10 EXP',
       isDone: false
     ),
     Task(
-      id: '1', 
-      title: 'Get out of bed', 
+      id: '1',
+      exp: 100,
+      title: 'Get out of bed',
       subtitle: '100 EXP',
       isDone: false
     ),
     Task(
-      id: '2', 
-      title: 'Wash my face', 
+      id: '2',
+      exp: 20,
+      title: 'Wash my face',
       subtitle: '20 EXP',
       isDone: false
     ), 
@@ -30,15 +33,18 @@ class TaskNotifier extends ChangeNotifier {
   }
 
   void removeTask(String taskId) {
-    // TODO: remove later (temp placement)
     toggle(taskId);
     tasks.removeWhere((task) => task.id == taskId);
-    notifyListeners();
+    // notifyListeners();
   }
 
   void toggle(String taskId) {
     final task = tasks.firstWhere((task) => task.id == taskId);
     task.isDone = !task.isDone;
+    // notifyListeners();
+  }
+
+  void delayedNotify() {
     notifyListeners();
   }
 }

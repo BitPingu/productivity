@@ -7,13 +7,13 @@ import 'package:productivity/models/task.dart';
 class TaskTile extends ConsumerWidget {
   final Task task;
   final Animation<double> animation;
-  final VoidCallback onChanged;
+  final VoidCallback? onClicked;
 
   const TaskTile({
     super.key,
     required this.task,
     required this.animation,
-    required this.onChanged,
+    required this.onClicked,
   });
 
   @override
@@ -22,8 +22,12 @@ class TaskTile extends ConsumerWidget {
     child: buildItem(context, ref),
   );
 
-  Widget buildItem(BuildContext context, WidgetRef ref) {
-    return ListTile(
+  Widget buildItem(BuildContext context, WidgetRef ref) => Container(
+    decoration: BoxDecoration(
+      color: Colors.amber,
+      borderRadius: BorderRadius.circular(12),
+    ),
+    child: ListTile(
       contentPadding: const EdgeInsets.symmetric(
         horizontal: 16.0,
         vertical: 2.0,
@@ -36,7 +40,7 @@ class TaskTile extends ConsumerWidget {
         ),
       ),
       subtitle: Text(
-        task.subtitle,
+        "${task.exp} EXP",
         style: const TextStyle(
           color: Colors.black87,
         ),
@@ -50,7 +54,7 @@ class TaskTile extends ConsumerWidget {
               margin: const EdgeInsets.all(4),
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: !task.isDone ? Colors.green : Colors.white,
+                color: !task.isDone ? Colors.tealAccent[400] : Colors.white,
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
@@ -67,7 +71,7 @@ class TaskTile extends ConsumerWidget {
             child: Container(
               margin: const EdgeInsets.all(4),
               decoration: BoxDecoration(
-                color: !task.isDone ? Colors.white : Colors.green,
+                color: !task.isDone ? Colors.white : Colors.tealAccent[400],
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
@@ -79,10 +83,10 @@ class TaskTile extends ConsumerWidget {
                 ],
               ),
               child: IconButton(
-                onPressed: onChanged,
+                onPressed: onClicked,
                 icon: Icon(
                   Icons.check,
-                  color: !task.isDone ? Colors.green : Colors.white,
+                  color: !task.isDone ? Colors.tealAccent[400] : Colors.white,
                   size: 27,
                 ),
               ),
@@ -90,9 +94,8 @@ class TaskTile extends ConsumerWidget {
           ),
         ],
       ),
-    );
+    )
+  );
   }
-
-}
 
 

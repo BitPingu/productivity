@@ -38,6 +38,7 @@ dependencies:
   flutter_riverpod: ^2.6.1
   intl: ^0.20.2
   fl_chart: ^1.0.0
+  fluttertoast: ^9.0.0
 
 dev_dependencies:
   flutter_test:

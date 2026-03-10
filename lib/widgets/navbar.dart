@@ -36,7 +36,7 @@ class Navbar extends StatelessWidget {
           NavigationDestination(
             selectedIcon: Icon(Icons.format_list_bulleted),
             icon: Icon(Icons.format_list_bulleted), 
-            label: 'Tasks',
+            label: 'Incentives',
           ),
           NavigationDestination(
             selectedIcon: Icon(Icons.person),
