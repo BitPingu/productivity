@@ -24,7 +24,21 @@ class TaskNotifier extends ChangeNotifier {
       title: 'Wash my face',
       subtitle: '20 EXP',
       isDone: false
-    ), 
+    ),
+    // Task(
+    //   id: '3',
+    //   exp: 40,
+    //   title: 'Take 3 deep breaths',
+    //   subtitle: '40 EXP',
+    //   isDone: false
+    // ),
+    // Task(
+    //   id: '4',
+    //   exp: 15,
+    //   title: 'Brush teeh',
+    //   subtitle: '15 EXP',
+    //   isDone: false
+    // ),
   ];
 
   void addTask(Task task) {

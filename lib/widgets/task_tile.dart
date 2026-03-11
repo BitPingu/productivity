@@ -24,7 +24,7 @@ class TaskTile extends ConsumerWidget {
 
   Widget buildItem(BuildContext context, WidgetRef ref) => Container(
     decoration: BoxDecoration(
-      color: Colors.amber,
+      color: Colors.cyan[50],
       borderRadius: BorderRadius.circular(12),
     ),
     child: ListTile(

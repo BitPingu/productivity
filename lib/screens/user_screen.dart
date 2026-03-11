@@ -66,27 +66,17 @@ class UserPageState extends ConsumerState<UserScreen> {
                   switch (index) {
                     case 0:
                       return RadarChartTitle(
-                        text: 'Strength',
+                        text: 'Physical',
                         angle: usedAngle,
                       );
                     case 1:
                       return RadarChartTitle(
-                        text: 'Intelligence',
+                        text: 'Mental',
                         angle: usedAngle,
                       );
                     case 2:
                       return RadarChartTitle(
-                        text: 'Courage',
-                        angle: usedAngle,
-                      );
-                    case 3:
-                      return RadarChartTitle(
-                        text: 'Kindness',
-                        angle: usedAngle,
-                      );
-                    case 4:
-                      return RadarChartTitle(
-                        text: 'Charisma',
+                        text: 'Spiritual',
                         angle: usedAngle,
                       );
                     default:
@@ -103,8 +93,7 @@ class UserPageState extends ConsumerState<UserScreen> {
               ),
             ),
             ),
-            // SizedBox(height: 4),
-            Text("Your Stats"),
+            Text("Your Well-Being"),
           ],
         ),
       ),
@@ -144,10 +133,8 @@ class UserPageState extends ConsumerState<UserScreen> {
         color: Colors.greenAccent,
         values: [
           60,
-          80,
-          50,
           70,
-          60
+          50,
         ],
       ),
     ];

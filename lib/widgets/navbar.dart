@@ -18,9 +18,6 @@ class Navbar extends StatelessWidget {
                 context.go('/');
                 break;
               case 1:
-                context.go('/tasks');
-                break;
-              case 2:
                 context.go('/user');
                 break;
             }
@@ -32,11 +29,6 @@ class Navbar extends StatelessWidget {
             selectedIcon: Icon(Icons.home),
             icon: Icon(Icons.home_outlined), 
             label: 'Home',
-          ),
-          NavigationDestination(
-            selectedIcon: Icon(Icons.format_list_bulleted),
-            icon: Icon(Icons.format_list_bulleted), 
-            label: 'Incentives',
           ),
           NavigationDestination(
             selectedIcon: Icon(Icons.person),
@@ -51,8 +43,7 @@ class Navbar extends StatelessWidget {
   int _getSelectedIndex(BuildContext context) {
     final location = GoRouterState.of(context).uri.toString();
     if (location == '/') return 0;
-    if (location == '/tasks') return 1;
-    if (location == '/user') return 2;
+    if (location == '/user') return 1;
     return 0;
   }
 }
