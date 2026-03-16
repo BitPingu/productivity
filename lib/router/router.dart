@@ -1,11 +1,11 @@
 import 'package:go_router/go_router.dart';
-import 'package:productivity/main.dart';
+import 'package:ikigai/main.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:productivity/router/CustomTransitionPage.dart';
-import 'package:productivity/screens/home_screen.dart';
-import 'package:productivity/screens/new_task_screen.dart';
-import 'package:productivity/screens/user_screen.dart';
-import 'package:productivity/widgets/navbar.dart';
+import 'package:ikigai/router/CustomTransitionPage.dart';
+import 'package:ikigai/screens/home_screen.dart';
+import 'package:ikigai/screens/task_screen.dart';
+import 'package:ikigai/screens/user_screen.dart';
+import 'package:ikigai/widgets/navbar.dart';
 
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -35,7 +35,15 @@ final routerProvider = Provider<GoRouter>((ref) {
             pageBuilder: (context, state) => buildPageWithDefaultTransition<void>(
               context: context,
               state: state,
-              child: NewTaskScreen()
+              child: TaskScreen()
+            )
+          ),
+          GoRoute(
+            path: '/new-task/:taskId',
+            pageBuilder: (context, state) => buildPageWithDefaultTransition<void>(
+              context: context,
+              state: state,
+              child: TaskScreen(taskId: state.pathParameters['taskId'])
             )
           )
         ]

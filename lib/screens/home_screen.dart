@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:productivity/models/task.dart';
-import 'package:productivity/providers/task_provider.dart';
-import 'package:productivity/widgets/task_tile.dart';
+import 'package:ikigai/models/task.dart';
+import 'package:ikigai/providers/task_provider.dart';
+import 'package:ikigai/widgets/task_tile.dart';
 
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -18,62 +17,71 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class HomePageState extends ConsumerState<HomeScreen> {
   String date = DateFormat.MMMMEEEEd().format(DateTime.now());
-  String greeting = '';
-  String imgPath = '';
+  String greeting = "";
+  String imgPath = "";
+  FToast fToast = FToast();
 
   @override
   void initState() {
     super.initState();
     int hour = DateTime.now().hour;
-    if (hour >= 5 && hour <= 12) {
-      greeting = 'morning';
-      imgPath = 'images/morning.jpg';
-    } else if (hour >= 12 && hour <= 16 ) {
-      greeting = 'afternoon';
-      imgPath = 'images/afternoon.jpg';
-    } else if (hour >= 16 && hour <= 21) {
-      greeting = 'evening';
-      imgPath = 'images/evening.jpg';
+    if (hour >= 5 && hour < 12) {
+      greeting = "morning";
+      imgPath = "images/morning.jpg";
+    } else if (hour >= 12 && hour < 17 ) {
+      greeting = "afternoon";
+      imgPath = "images/afternoon.jpg";
+    } else if (hour >= 17 && hour < 22) {
+      greeting = "evening";
+      imgPath = "images/evening.jpg";
     } else {
-      greeting = 'night';
-      imgPath = 'images/night.jpg';
+      greeting = "night";
+      imgPath = "images/night.jpg";
     }
+    fToast.init(context);
   }
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     List<Task> tasks = ref.watch(tasksProvider).tasks;
-    final List<int> colorCodes = <int>[600, 500, 100];
     final listKey = GlobalKey<AnimatedListState>();
 
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 70),
+            const SizedBox(height: 70.0),
             Text(
-              'Good $greeting, Gavin!',
-              style: Theme.of(context).textTheme.headlineMedium,
+              "Good $greeting, Gavin!",
+              style: TextStyle(
+                color: !isDarkMode ? Colors.black87 : Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 24.0,
+              ),
             ),
             Text(
-              'It is currently ${date.toString()}',
-              style: Theme.of(context).textTheme.titleMedium,
+              "It is currently ${date.toString()}",
+              style: TextStyle(
+                color: !isDarkMode ? Colors.black87 : Colors.white,
+                fontSize: 16.0,
+              ),
             ),
 
-            const SizedBox(height: 10),
+            const SizedBox(height: 10.0),
             Image.asset(imgPath),
-            const SizedBox(height: 15),
+            const SizedBox(height: 15.0),
 
             tasks.length > 1
-            ? Text("${tasks.length} incentives left for today! Keep it up!")
+            ? Text("${tasks.length} tasks left for today! Keep it up!")
             : tasks.length == 1 
-            ? Text("${tasks.length} incentive left for today! Almost there!")
-            : Text("No incentives left for today! Hooray!"),
+            ? Text("${tasks.length} task left for today! Almost there!")
+            : Text("All tasks complete! Good job!"),
 
-            const SizedBox(height: 6),
+            const SizedBox(height: 6.0),
 
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 80),
+              padding: const EdgeInsets.symmetric(horizontal: 80.0),
               child: TweenAnimationBuilder(
                 tween: Tween<double>(
                   begin: tasks.length.toDouble(),
@@ -88,13 +96,13 @@ class HomePageState extends ConsumerState<HomeScreen> {
               ),
             ),
 
-            const SizedBox(height: 12),
+            const SizedBox(height: 12.0),
 
             AnimatedList.separated(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 key: listKey,
-                padding: const EdgeInsets.symmetric(horizontal: 26),
+                padding: const EdgeInsets.symmetric(horizontal: 26.0),
                 initialItemCount: tasks.length,
                 itemBuilder: (BuildContext context, int index, Animation<double> animation) {
                   final task = tasks[index];
@@ -116,10 +124,36 @@ class HomePageState extends ConsumerState<HomeScreen> {
                       ref.read(tasksProvider).removeTask(task.id);
                       Future.delayed(Duration(milliseconds: 150), () {
                         ref.read(tasksProvider).delayedNotify();
-                        Fluttertoast.showToast(
-                          msg: "Task completed! Gained ${task.exp} EXP.",
-                          gravity: ToastGravity.TOP,
-                          backgroundColor: Colors.cyan[400],
+                        fToast.showToast(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
+                            decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12.0),
+                            color: Colors.lightGreen,
+                            ),
+                            child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                                Icon(
+                                  Icons.check,
+                                  color: Colors.white,
+                                ),
+                                SizedBox(
+                                width: 12.0,
+                                ),
+                                Text(
+                                  "Task completed! Gained ${task.exp} EXP.",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16.0,
+                                  ),
+                                ),
+                            ],
+                            ),
+                          ),
+                          gravity: ToastGravity.BOTTOM,
+                          toastDuration: Duration(seconds: 2),
                         );
                       });
                     }
@@ -132,14 +166,14 @@ class HomePageState extends ConsumerState<HomeScreen> {
                   height: 6
                 ),
               ),
-              const SizedBox(height: 70)
+              const SizedBox(height: 70.0)
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.tealAccent[400],
         onPressed: () {
-          context.push('/new-task');
+          context.push("/new-task");
         },
         child: const Icon(
           Icons.add,

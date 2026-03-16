@@ -25,8 +25,10 @@ class MyApp extends ConsumerWidget {
 
       // Sets the app theme color
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.tealAccent),
+        colorSchemeSeed: Colors.tealAccent,
       ),
+      darkTheme: ThemeData.dark(),
+      themeMode: ThemeMode.system,
 
       // Removes debug banner
       debugShowCheckedModeBanner: false,

@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:productivity/models/task.dart';
+import 'package:ikigai/models/task.dart';
 
 class TaskNotifier extends ChangeNotifier {
-  List<Task> tasks = [
+  final List<Task> _tasks = [
     Task(
       id: '0',
       exp: 10,
@@ -41,19 +41,32 @@ class TaskNotifier extends ChangeNotifier {
     // ),
   ];
 
+  List<Task> get tasks => _tasks;
+
   void addTask(Task task) {
-    tasks.add(task);
+    _tasks.add(task);
     notifyListeners();
+  }
+
+  void editTask(Task task) {
+    int index = _tasks.indexWhere((item) => item.id == task.id);
+    _tasks[index] = task;
+    notifyListeners();
+  }
+
+  Task getTask(String taskId) {
+    Task task = _tasks.firstWhere((item) => item.id == taskId);
+    return task;
   }
 
   void removeTask(String taskId) {
     toggle(taskId);
-    tasks.removeWhere((task) => task.id == taskId);
+    _tasks.removeWhere((task) => task.id == taskId);
     // notifyListeners();
   }
 
   void toggle(String taskId) {
-    final task = tasks.firstWhere((task) => task.id == taskId);
+    final task = _tasks.firstWhere((task) => task.id == taskId);
     task.isDone = !task.isDone;
     // notifyListeners();
   }
@@ -62,11 +75,6 @@ class TaskNotifier extends ChangeNotifier {
     notifyListeners();
   }
 }
-
-// Implement methods to update and delete tasks
-
-// You can also add methods for fetching and managing tasks
-
 
 final tasksProvider = ChangeNotifierProvider<TaskNotifier>((ref) => TaskNotifier());
 
